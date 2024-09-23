@@ -5,6 +5,7 @@ namespace Luminar\Components\Messenger\Entities;
 use DateTime;
 use Luminar\Database\ORM\Column;
 use Luminar\Database\ORM\Entity;
+use Luminar\Database\ORM\TypesAttributes;
 
 #[Entity(name: "messenger_messages")]
 class MessageEntity
@@ -12,8 +13,8 @@ class MessageEntity
     #[Column(name: "id")]
     protected int $id;
 
-    #[Column(name: "content")]
-    protected array $content;
+    #[Column(name: "content", type: TypesAttributes::TYPE_LONGTEXT)]
+    protected string $content;
 
     #[Column(name: "createdAt")]
     protected DateTime $createdAt;
@@ -44,17 +45,17 @@ class MessageEntity
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getContent(): array
+    public function getContent(): string
     {
         return $this->content;
     }
 
     /**
-     * @param array $content
+     * @param string $content
      */
-    public function setContent(array $content): void
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }

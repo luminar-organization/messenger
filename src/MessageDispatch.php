@@ -54,7 +54,7 @@ class MessageDispatch
     public function dispatch(MessageInterface $message): void
     {
         $messageEntity = new MessageEntity();
-        $messageEntity->setContent([base64_encode($message->getContent())]);
+        $messageEntity->setContent(base64_encode($message->getContent()));
         $messageEntity->setAvailableAt($message->getAvailable());
         $messageEntity->setCreatedAt(new DateTime());
         $messageEntity->setStatus(MessageAttributes::STATUS_NONE);
@@ -84,7 +84,7 @@ class MessageDispatch
     public function callMessage(MessageEntity $messageEntity, EntityManager $entityManager): void
     {
         if($messageEntity->getStatus() === MessageAttributes::STATUS_DELIVERED or $messageEntity->getStatus() === MessageAttributes::STATUS_FAILED or $messageEntity->getStatus() === MessageAttributes::STATUS_IN_DELIVERY) return;
-        $content = base64_decode($messageEntity->getContent()[0]);
+        $content = base64_decode($messageEntity->getContent());
         $content = Envelope::unSerialize($content);
         $currentDate = new DateTime();
         if($messageEntity->getAvailableAt() > $currentDate) {
